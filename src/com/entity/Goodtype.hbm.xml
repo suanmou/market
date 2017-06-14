@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-6-4 8:38:49 by Hibernate Tools 3.6.0.Final -->
+<hibernate-mapping>
+    <class name="com.entity.Goodtype" table="goodtype" catalog="supermarket">
+        <id name="goodtypeId" type="string">
+            <column name="goodtypeId" length="4" />
+            <generator class="assigned" />
+        </id>
+        <property name="goodtypeName" type="string">
+            <column name="goodtypeName" length="20" not-null="true" />
+        </property>
+        <set name="goods" table="good" inverse="true" lazy="false" fetch="join" cascade="all">
+            <key>
+                <column name="goodtypeId" length="4" not-null="true" />
+            </key>
+            <one-to-many class="com.entity.Good" />
+        </set>
+    </class>
+</hibernate-mapping>

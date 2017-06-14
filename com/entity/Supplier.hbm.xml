@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-23 22:38:04 by Hibernate Tools 3.6.0.Final -->
+<hibernate-mapping>
+    <class name="com.entity.Supplier" table="supplier" catalog="market">
+        <id name="supplierId" type="string">
+            <column name="supplierId" length="6" />
+            <generator class="assigned" />
+        </id>
+        <property name="supplierName" type="string">
+            <column name="supplierName" length="50" not-null="true" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="20" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="30" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="80" />
+        </property>
+        <set name="inshops" table="inshop" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="supplierId" length="6" not-null="true" />
+            </key>
+            <one-to-many class="com.entity.Inshop" />
+        </set>
+        <set name="goods" table="good" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="supplierId" length="6" not-null="true" />
+            </key>
+            <one-to-many class="com.entity.Good" />
+        </set>
+    </class>
+</hibernate-mapping>

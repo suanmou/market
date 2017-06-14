@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-23 22:38:04 by Hibernate Tools 3.6.0.Final -->
+<hibernate-mapping>
+    <class name="com.entity.Dealing" table="dealing" catalog="market">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="customer" class="com.entity.Customer" fetch="select">
+            <column name="customerId" length="6" />
+        </many-to-one>
+        <many-to-one name="admin" class="com.entity.Admin" fetch="select">
+            <column name="adminId" length="6" not-null="true" />
+        </many-to-one>
+        <property name="goodId" type="string">
+            <column name="goodId" length="6" not-null="true" />
+        </property>
+        <property name="num" type="int">
+            <column name="num" not-null="true" />
+        </property>
+        <property name="dealingtime" type="timestamp">
+            <column name="dealingtime" length="19" not-null="true" />
+        </property>
+        <property name="price" type="big_decimal">
+            <column name="price" precision="10" not-null="true" />
+        </property>
+        <property name="originPrice" type="big_decimal">
+            <column name="originPrice" precision="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

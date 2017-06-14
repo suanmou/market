@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd"
+	xmlns:tx="http://www.springframework.org/schema/tx">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format">true</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/entity/Customer.hbm.xml</value>  
+				<value>com/entity/Dealing.hbm.xml</value>  
+				<value>com/entity/Inshop.hbm.xml</value>  
+				<value>com/entity/Admin.hbm.xml</value>  
+				<value>com/entity/Supplier.hbm.xml</value>  
+				<value>com/entity/Good.hbm.xml</value>  
+				<value>com/entity/Goodtype.hbm.xml</value>  
+			</list>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- 配置action -->
+	<bean id="customerAction" class="com.action.CustomerAction" scope="prototype">
+		<property name="customerService" ref="customerService"></property>
+	</bean>
+	<bean id="adminAction" class="com.action.AdminAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	<bean id="supplierAction" class="com.action.SupplierAction" scope="prototype">
+		<property name="supplierService" ref="supplierService"></property>
+	</bean>
+	<bean id="goodAction" class="com.action.GoodAction" scope="prototype">
+		<property name="goodService" ref="goodService"></property>
+		<property name="goodtypeService" ref="goodtypeService"></property>
+	</bean>
+	<bean id="goodtypeAction" class="com.action.GoodtypeAction" scope="prototype">
+		<property name="goodtypeService" ref="goodtypeService"></property>
+	</bean>
+	<bean id="inshopAction" class="com.action.InshopAction" scope="prototype">
+		<property name="inshopService" ref="inshopService"></property>
+		<property name="supplierService" ref="supplierService"></property>
+		<property name="goodService" ref="goodService"></property>
+	</bean>
+	<bean id="dealingAction" class="com.action.DealingAction" scope="prototype">
+		<property name="dealingService" ref="dealingService"></property>
+		<property name="goodService" ref="goodService"></property>
+		<property name="adminService" ref="adminService"></property>
+		<property name="customerService" ref="customerService"></property>
+	</bean>
+
+	<!-- 配置service -->
+	<bean id="customerService" class="com.service.impl.CustomerServiceImpl" scope="prototype">
+		<property name="customerDao" ref="customerDao"></property>
+	</bean>
+	<bean id="adminService" class="com.service.impl.AdminServiceImpl" scope="prototype">
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
+	<bean id="supplierService" class="com.service.impl.SupplierServiceImpl" scope="prototype">
+		<property name="supplierDao" ref="supplierDao"></property>
+	</bean>
+	<bean id="goodService" class="com.service.impl.GoodServiceImpl" scope="prototype">
+		<property name="goodDao" ref="goodDao"></property>
+	</bean>
+	<bean id="goodtypeService" class="com.service.impl.GoodtypeServiceImpl" scope="prototype">
+		<property name="goodtypeDao" ref="goodtypeDao"></property>
+		<property name="goodDao" ref="goodDao"></property>
+		
+	</bean>
+	<bean id="inshopService" class="com.service.impl.InshopServiceImpl" scope="prototype">
+		<property name="inshopDao" ref="inshopDao"></property>
+		<property name="goodDao" ref="goodDao"></property>
+	</bean>
+	<bean id="dealingService" class="com.service.impl.DealingServiceImpl" scope="prototype">
+		<property name="dealingDao" ref="dealingDao"></property>
+		<property name="goodDao" ref="goodDao"></property>
+		<property name="customerDao" ref="customerDao"></property>
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
+
+	<!-- 配置dao -->
+	<bean id="customerDao" class="com.dao.impl.CustomerDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="adminDao" class="com.dao.impl.AdminDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="supplierDao" class="com.dao.impl.SupplierDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="goodDao" class="com.dao.impl.GoodDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="goodtypeDao" class="com.dao.impl.GoodtypeDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="inshopDao" class="com.dao.impl.InshopDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="dealingDao" class="com.dao.impl.DealingDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

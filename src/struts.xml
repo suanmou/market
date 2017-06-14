@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5dtd">
+<struts>
+<include file="struts-default.xml"></include>  
+    <!-- 指定默认编码集 -->  
+    <constant name="struts.i18n.encoding" value="UTF-8"></constant>  
+    <!-- 指定需要Struts2处理的请求后缀 -->  
+    <constant name="struts.action.extension" value="do,action"></constant>  
+    <!-- 设置浏览器是否缓存静态内容，开发阶段应关闭，生产阶段打开，默认为打开 -->  
+    <constant name="struts.serve.static.browserCache" value="false"></constant>  
+    <!-- 当struts的配置文件修改后，系统是否自动重新加载该文件，默认为false，开发阶段应打开 -->  
+    <constant name="struts.configuration.xml.reload" value="true"></constant>  
+    <!-- 开发模式下使用，可以打印出更详细的错误信息 -->  
+    <constant name="struts.devMode" value="true"></constant>  
+    <!-- action全部用注解进行配置 --> 
+    <!-- 是否开启动态方法调用 -->  
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />  
+    <!--添加包 -->   
+    <package name="myPackage" namespace="/"  extends="struts-default">
+        <action name="customer_*" class="customerAction" method="{1}" >    
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="findAll">/userList.jsp</result>
+        	<result name="edit">/editCustomer.jsp</result>
+        	<allowed-methods>login,save,update,delete,findAll,findByCustomerId</allowed-methods>
+        </action>    
+        <action name="admin_*" class="adminAction" method="{1}" >
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="findAll">/adminList.jsp</result>
+        	<result name="index">/index.jsp</result>
+        	<result name="edit">/editAdmin.jsp</result>
+        	<allowed-methods>login,logout,save,update,delete,findAll,findByAdminId,findByAdminIdAndPassword</allowed-methods>
+        </action>    
+         <action name="supplier_*" class="supplierAction" method="{1}" >
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="findAll">/supplierList.jsp</result>
+        	<result name="edit">/editSupplier.jsp</result>
+        	<allowed-methods>save,findBySupplierId,update,delete,findAll</allowed-methods>
+        </action>    
+        <action name="good_*" class="goodAction" method="{1}" >
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="edit">/editGood.jsp</result>
+        	<result name="findAll">/goodList.jsp</result>
+        	<allowed-methods>save,findByGoodId,update,delete,findAll,findByGoodName</allowed-methods>
+        </action>    
+        <action name="goodtype_*" class="goodtypeAction" method="{1}" >
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="findAll">/goodtypeList.jsp</result>
+        	<result name="edit">/editGoodtype.jsp</result>
+        	<result name="warning">/warning.jsp</result>
+        	<allowed-methods>save,update,delete,findAll,findByGoodtypeId</allowed-methods>
+        </action>    
+        <action name="inshop_*" class="inshopAction" method="{1}" >
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="findAll">/inshopList.jsp</result>
+        	<allowed-methods>save,update,delete,findAll,findByInshopId,findByLastPrice</allowed-methods>
+        </action>    
+        <action name="dealing_*" class="dealingAction" method="{1}" >
+        	<result name="success">/success.jsp</result>
+        	<result name="error">/error.jsp</result>
+        	<result name="input">/login.jsp</result>
+        	<result name="findAll">/dealingList.jsp</result>
+        	<allowed-methods>save,update,delete,findAll,findByDealingId</allowed-methods>
+        </action>    
+
+    </package>
+
+</struts>

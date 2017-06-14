@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-23 22:38:04 by Hibernate Tools 3.6.0.Final -->
+<hibernate-mapping>
+    <class name="com.entity.Admin" table="admin" catalog="market">
+        <id name="adminId" type="string">
+            <column name="adminId" length="6" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" length="20" not-null="true" />
+        </property>
+        <property name="adminName" type="string">
+            <column name="adminName" length="20" not-null="true" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="4" not-null="true" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="20" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="30" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="80" />
+        </property>
+        <property name="rankId" type="int">
+            <column name="rankId" not-null="true" />
+        </property>
+        <set name="dealings" table="dealing" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="adminId" length="6" not-null="true" />
+            </key>
+            <one-to-many class="com.entity.Dealing" />
+        </set>
+    </class>
+</hibernate-mapping>

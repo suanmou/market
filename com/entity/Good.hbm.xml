@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-23 22:38:04 by Hibernate Tools 3.6.0.Final -->
+<hibernate-mapping>
+    <class name="com.entity.Good" table="good" catalog="market">
+        <id name="goodId" type="string">
+            <column name="goodId" length="6" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="goodtype" class="com.entity.Goodtype" fetch="select">
+            <column name="goodtypeId" length="4" not-null="true" />
+        </many-to-one>
+        <many-to-one name="supplier" class="com.entity.Supplier" fetch="select">
+            <column name="supplierId" length="6" not-null="true" />
+        </many-to-one>
+        <property name="goodName" type="string">
+            <column name="goodName" length="50" not-null="true" />
+        </property>
+        <property name="price" type="big_decimal">
+            <column name="price" precision="10" not-null="true" />
+        </property>
+        <property name="num" type="int">
+            <column name="num" not-null="true" />
+        </property>
+        <property name="originPrice" type="big_decimal">
+            <column name="originPrice" precision="10" not-null="true" />
+        </property>
+        <set name="inshops" table="inshop" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="goodId" length="6" not-null="true" />
+            </key>
+            <one-to-many class="com.entity.Inshop" />
+        </set>
+    </class>
+</hibernate-mapping>
